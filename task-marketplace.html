@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Marketplace - MicroTasker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+ 
+    header {
+      background: #007bff;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+ 
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+ 
+    .container {
+      width: 90%;
+      margin: 30px auto;
+    }
+ 
+    h2 {
+      color: #007bff;
+    }
+ 
+    .task-form, .task-list {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+ 
+    .task-form input, .task-form textarea, .task-form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+ 
+    .task-form button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+ 
+    .task {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+ 
+    .task h3 {
+      margin: 0;
+      color: #333;
+    }
+ 
+    .task small {
+      color: #666;
+    }
+ 
+    .task button {
+      margin-top: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+ 
+    footer {
+      background: #007bff;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MicroTasker</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="task-marketplace.html">Task Marketplace</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+ 
+  <div class="container">
+    <h2>Task Marketplace</h2>
+ 
+    <!-- Requester Task Form -->
+    <div class="task-form">
+      <h3>Post a New Task</h3>
+      <input type="text" id="taskTitle" placeholder="Task Title">
+      <textarea id="taskDesc" placeholder="Task Description"></textarea>
+      <select id="taskCategory">
+        <option value="Data Entry">Data Entry</option>
+        <option value="Surveys">Surveys</option>
+        <option value="Transcription">Transcription</option>
+      </select>
+      <input type="number" id="taskPayment" placeholder="Payment Amount ($)">
+      <input type="date" id="taskDeadline">
+      <button onclick="postTask()">Post Task</button>
+    </div>
+ 
+    <!-- Available Tasks -->
+    <div class="task-list">
+      <h3>Available Tasks</h3>
+      <div id="tasks"></div>
+    </div>
+  </div>
+ 
+  <footer>
+    <p>&copy; 2025 MicroTasker. All Rights Reserved.</p>
+  </footer>
+ 
+  <script>
+    let tasks = [];
+ 
+    function postTask() {
+      const title = document.getElementById('taskTitle').value;
+      const desc = document.getElementById('taskDesc').value;
+      const category = document.getElementById('taskCategory').value;
+      const payment = document.getElementById('taskPayment').value;
+      const deadline = document.getElementById('taskDeadline').value;
+ 
+      if (title && desc && category && payment && deadline) {
+        const task = {
+          title,
+          desc,
+          category,
+          payment,
+          deadline
+        };
+        tasks.push(task);
+        displayTasks();
+        alert("Task posted successfully!");
+      } else {
+        alert("Please fill all fields.");
+      }
+    }
+ 
+    function displayTasks() {
+      const taskDiv = document.getElementById('tasks');
+      taskDiv.innerHTML = "";
+      tasks.forEach((task, index) => {
+        taskDiv.innerHTML += `
+          <div class="task">
+            <h3>${task.title}</h3>
+            <p>${task.desc}</p>
+            <small>Category: ${task.category} | Payment: $${task.payment} | Deadline: ${task.deadline}</small><br>
+            <button onclick="acceptTask(${index})">Accept Task</button>
+          </div>
+        `;
+      });
+    }
+ 
+    function acceptTask(index) {
+      alert("You accepted: " + tasks[index].title);
+      window.location.href = "dashboard.html"; // Redirect to dashboard
+    }
+  </script>
+</body>
+</html>
